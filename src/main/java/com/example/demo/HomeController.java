@@ -1,7 +1,12 @@
 package com.example.demo;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import com.example.demo.model.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.security.Principal;
 
 @Controller
 public class HomeController {
@@ -21,8 +26,15 @@ public class HomeController {
         return "admin";
     }
 
+//    @RequestMapping("/secure")
+//    public String secure(){
+//        return "secure";
+//    }
     @RequestMapping("/secure")
-    public String secure(){
+    public String secure(Principal principal, Model model){
+        User myUser = ((CustomUserDetails) ((UsernamePasswordAuthenticationToken) principal)
+                .getPrincipal()).getUser();
+        model.addAttribute("myuser",myUser);
         return "secure";
     }
 }

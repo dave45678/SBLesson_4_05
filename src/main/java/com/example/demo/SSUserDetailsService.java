@@ -31,11 +31,13 @@ public class SSUserDetailsService implements UserDetailsService {
             if(user == null) {
                 return null;
             }
-
-            return new org.springframework.security.core.userdetails.User(
-                    user.getUsername(),
-                    user.getPassword(),
-                    getAuthorities(user));
+            // removed for 4.05
+//            return new org.springframework.security.core.userdetails.User(
+//                    user.getUsername(),
+//                    user.getPassword(),
+//                    getAuthorities(user));
+            //added for 4.05
+            return new CustomUserDetails(user,getAuthorities(user));
         }
         catch (Exception e) {
             throw new UsernameNotFoundException("User not found");
